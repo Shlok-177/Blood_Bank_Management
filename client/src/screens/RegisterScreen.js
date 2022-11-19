@@ -8,11 +8,11 @@ const RegisterScreen = ({ location, history }) => {
   const [mobile, setMobile] = useState("");
   const [email, setEmail] = useState("");
   const [bloodGroup, setBloodGroup] = useState("");
-  const [religion, setReligion] = useState("");
+  // const [religion, setReligion] = useState("");
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   const [postalCode, setPostalCode] = useState("");
-  const [weight, setWeight] = useState(0);
+  // const [weight, setWeight] = useState(0);
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -21,7 +21,6 @@ const RegisterScreen = ({ location, history }) => {
 
   const userRegister = useSelector((state) => state.userRegister);
   const { userInfo } = userRegister;
-
 
   useEffect(() => {
     if (userInfo) {
@@ -32,7 +31,7 @@ const RegisterScreen = ({ location, history }) => {
   const submitHandler = (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      window.alert('Passwords Do Not Matched!')
+      window.alert("Passwords Do Not Matched!");
     } else {
       dispatch(
         register(
@@ -40,11 +39,11 @@ const RegisterScreen = ({ location, history }) => {
           mobile,
           email,
           bloodGroup,
-          religion,
+          // religion,
           address,
           city,
           postalCode,
-          weight,
+          // weight,
           dateOfBirth,
           password
         )
@@ -93,13 +92,13 @@ const RegisterScreen = ({ location, history }) => {
             onChange={(e) => setBloodGroup(e.target.value)}
           />
 
-          <label>Enter Religion:</label>
+          {/* <label>Enter Religion:</label>
           <input
             type="text"
             placeholder="Enter Religion"
             value={religion}
             onChange={(e) => setReligion(e.target.value)}
-          />
+          /> */}
 
           <label>Enter Present Adress:</label>
           <input
@@ -125,13 +124,13 @@ const RegisterScreen = ({ location, history }) => {
             onChange={(e) => setPostalCode(e.target.value)}
           />
 
-          <label>Enter Weight:</label>
+          {/* <label>Enter Weight:</label>
           <input
             type="number"
             placeholder="Enter Weight"
             value={weight}
             onChange={(e) => setWeight(e.target.value)}
-          />
+          /> */}
 
           <label>Enter Date Of Birth:</label>
           <input
@@ -156,10 +155,11 @@ const RegisterScreen = ({ location, history }) => {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
-
+          {/* <Link to="/login"> */}
           <button type="submit" className="submitButton">
             Sign Up
           </button>
+          {/* </Link> */}
           <div className="formFooter">
             <p>Already Registered?</p>
             <Link to={"/login"} className="formFooterLink">
@@ -173,4 +173,3 @@ const RegisterScreen = ({ location, history }) => {
 };
 
 export default RegisterScreen;
-

@@ -21,17 +21,17 @@ export const getPostList = () => async (dispatch, getState) => {
   try {
     dispatch({ type: POST_LIST_REQUEST });
 
-    const {
-      userLogin: { userInfo },
-    } = getState();
+    // const {
+    //   userLogin: { userInfo },
+    // } = getState();
 
     const config = {
       headers: {
-        Authorization: `Bearer ${userInfo.token}`,
+        //Authorization: `Bearer ${userInfo.token}`,
       },
     };
 
-    const { data } = await axios.get(`/api/posts`, config);
+    const { data } = await axios.get(`http://127.0.0.1:5000/api/posts`, config);
 
     dispatch({
       type: POST_LIST_SUCCESS,
@@ -52,27 +52,29 @@ export const createPost = (
   alternateMobile,
   relationship,
   requestBloodGroup,
-  time
+  time,
+  userId
 ) => async (dispatch, getState) => {
   try {
     dispatch({
       type: POST_CREATE_REQUEST,
     });
 
-    const {
-      userLogin: { userInfo },
-    } = getState();
+    // const {
+    //   userLogin: { userInfo },
+    // } = getState();
 
     const config = {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${userInfo.token}`,
+        //Authorization: `Bearer ${userInfo.token}`,
+        "Access-Control-Allow-Origin": "*",
       },
     };
 
     const { data } = await axios.post(
-      "/api/posts",
-      { alternateMobile, relationship, requestBloodGroup, time },
+      "http://127.0.0.1:5000/api/posts",
+      { alternateMobile, relationship, requestBloodGroup, time, userId },
       config
     );
 
@@ -95,17 +97,20 @@ export const postDetailsById = (id) => async (dispatch, getState) => {
   try {
     dispatch({ type: POST_DETAILS_REQUEST });
 
-    const {
-      userLogin: { userInfo },
-    } = getState();
+    // const {
+    //   userLogin: { userInfo },
+    // } = getState();
 
     const config = {
       headers: {
-        Authorization: `Bearer ${userInfo.token}`,
+        //Authorization: `Bearer ${userInfo.token}`,
       },
     };
 
-    const { data } = await axios.get(`/api/posts/${id}`, config);
+    const { data } = await axios.get(
+      `http://127.0.0.1:5000/api/posts/${id}`,
+      config
+    );
 
     dispatch({
       type: POST_DETAILS_SUCCESS,
@@ -131,19 +136,19 @@ export const checkDonationDate = (id, donationDate) => async (
       type: POST_DONATION_DATE_REQUEST,
     });
 
-    const {
-      userLogin: { userInfo },
-    } = getState();
+    // const {
+    //   userLogin: { userInfo },
+    // } = getState();
 
     const config = {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${userInfo.token}`,
+        //Authorization: `Bearer ${userInfo.token}`,
       },
     };
 
     const { data } = await axios.put(
-      `/api/posts/${id}/review`,
+      `http://127.0.0.1:5000/api/posts/${id}/review`,
       { donationDate },
       config
     );
@@ -169,17 +174,21 @@ export const postManageRequest = (id) => async (dispatch, getState) => {
       type: POST_MANAGE_REQUEST,
     });
 
-    const {
-      userLogin: { userInfo },
-    } = getState();
+    // const {
+    //   userLogin: { userInfo },
+    // } = getState();
 
     const config = {
       headers: {
-        Authorization: `Bearer ${userInfo.token}`,
+        //Authorization: `Bearer ${userInfo.token}`,
       },
     };
 
-    const { data } = await axios.put(`/api/posts/${id}/manage`, {}, config);
+    const { data } = await axios.put(
+      `http://127.0.0.1:5000/api/posts/${id}/manage`,
+      {},
+      config
+    );
 
     dispatch({
       type: POST_MANAGE_SUCCESS,

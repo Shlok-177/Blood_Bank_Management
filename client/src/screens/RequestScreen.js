@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SideBar from "../components/SideBar";
-import {createPost} from '../actions/postActions'
+import { createPost } from "../actions/postActions";
 import { getPostList } from "../actions/postActions";
 
-
-const RequestScreen = ({history}) => {
+const RequestScreen = ({ history }) => {
   const [alternateMobile, setAlternateMobile] = useState("");
   const [relationship, setRelationship] = useState("");
   const [requestBloodGroup, setRequestBloodGroup] = useState("");
@@ -17,21 +16,29 @@ const RequestScreen = ({history}) => {
   const { userInfo } = userLogin;
 
   useEffect(() => {
-    if(!userInfo){
-      history.push('/')
-    } 
-  }, [userInfo, history])
+    if (!userInfo) {
+      history.push("/");
+    }
+  }, [userInfo, history]);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    if(userInfo){
-        dispatch(createPost(alternateMobile,relationship,requestBloodGroup,time))
-        setAlternateMobile('');
-        setRelationship('');
-        setRequestBloodGroup('');
-        setTime('');
-        dispatch(getPostList())
-        history.push('/profile')
+    if (userInfo) {
+      dispatch(
+        createPost(
+          alternateMobile,
+          relationship,
+          requestBloodGroup,
+          time,
+          userInfo._id
+        )
+      );
+      setAlternateMobile("");
+      setRelationship("");
+      setRequestBloodGroup("");
+      setTime("");
+      dispatch(getPostList());
+      history.push("/profile");
     }
   };
 

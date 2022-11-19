@@ -27,22 +27,12 @@ const postSchema = mongoose.Schema(
       type: String,
       default: "",
     },
-    isReview: {
-      type: Boolean,
-      required: true,
-      default: false,
-    },
-    isManage: {
-      type: Boolean,
-      required: true,
-      default: false,
-    },
   },
   {
     timestamps: true,
   }
 );
 
-const Post = mongoose.model("Post", postSchema);
+const Post = mongoose.model("post", postSchema);
 
 export default Post;

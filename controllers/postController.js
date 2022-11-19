@@ -5,10 +5,11 @@ import Post from "../models/postModel.js";
 // @route   POST /api/posts
 // @access  Private
 const addRequestPost = asyncHandler(async (req, res) => {
-  const { alternateMobile, relationship, requestBloodGroup, time } = req.body;
-
+  const { alternateMobile, relationship, requestBloodGroup, time, userId } =
+    req.body;
+  //console.dir(userId);
   const post = new Post({
-    user: req.user._id,
+    user: userId,
     alternateMobile,
     relationship,
     requestBloodGroup,
@@ -16,6 +17,7 @@ const addRequestPost = asyncHandler(async (req, res) => {
   });
 
   const createdPost = await post.save();
+  await Post.db.collection("posts").insertOne(createdPost);
 
   res.status(201).json(createdPost);
 });
@@ -24,10 +26,8 @@ const addRequestPost = asyncHandler(async (req, res) => {
 // @route   GET /api/posts
 // @access  Public
 const getPosts = asyncHandler(async (req, res) => {
-  const posts = await Post.find({}).populate(
-    "user",
-    "id name mobile email bloodGroup address city postalCode dateOfBirth numberOfDonation"
-  );
+  const posts = await Post.db.collection("posts").find().toArray();
+  //console.log(posts);
   res.json(posts);
 });
 
@@ -35,10 +35,9 @@ const getPosts = asyncHandler(async (req, res) => {
 // @route   GET /api/posts/:id
 // @access  Private/Admin
 const getPostById = asyncHandler(async (req, res) => {
-  const post = await Post.findById(req.params.id).populate(
-    "user",
-    "id name mobile email bloodGroup address city postalCode dateOfBirth numberOfDonation"
-  );
+  const post = await Post.db.collection("posts").findOne({
+    _id: new ObjectId(req.params.id),
+  });
 
   if (post) {
     res.json(post);

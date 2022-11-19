@@ -30,11 +30,12 @@ export const login = (email, password) => async (dispatch) => {
     const config = {
       headers: {
         "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*", // Required for CORS support to work
       },
     };
 
     const { data } = await axios.post(
-      "/api/users/login",
+      "http://127.0.0.1:5000/api/users/login",
       { email, password },
       config
     );
@@ -61,69 +62,73 @@ export const logout = () => (dispatch) => {
   dispatch({ type: USER_LOGOUT });
 };
 
-export const register = (
-  name,
-  mobile,
-  email,
-  bloodGroup,
-  religion,
-  address,
-  city,
-  postalCode,
-  weight,
-  dateOfBirth,
-  password
-) => async (dispatch) => {
-  try {
-    dispatch({
-      type: USER_REGISTER_REQUEST,
-    });
+export const register =
+  (
+    name,
+    mobileNo,
+    email,
+    bloodGroup,
+    //religion,
+    address,
+    city,
+    postalCode,
+    //weight,
+    dateOfBirth,
+    password
+  ) =>
+  async (dispatch) => {
+    try {
+      dispatch({
+        type: USER_REGISTER_REQUEST,
+      });
 
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+      };
+      console.log(config);
 
-    const { data } = await axios.post(
-      "/api/users",
-      {
-        name,
-        mobile,
-        email,
-        bloodGroup,
-        religion,
-        address,
-        city,
-        postalCode,
-        weight,
-        dateOfBirth,
-        password,
-      },
-      config
-    );
+      const { data } = await axios.post(
+        "http://127.0.0.1:5000/api/users/register",
+        {
+          name,
+          mobileNo,
+          email,
+          bloodGroup,
+          //religion,
+          address,
+          city,
+          postalCode,
+          //weight,
+          dateOfBirth,
+          password,
+        },
+        config
+      );
+      console.log(data);
+      dispatch({
+        type: USER_REGISTER_SUCCESS,
+        payload: data,
+      });
 
-    dispatch({
-      type: USER_REGISTER_SUCCESS,
-      payload: data,
-    });
+      dispatch({
+        type: USER_LOGIN_SUCCESS,
+        payload: data,
+      });
 
-    dispatch({
-      type: USER_LOGIN_SUCCESS,
-      payload: data,
-    });
-
-    localStorage.setItem("userInfo", JSON.stringify(data));
-  } catch (error) {
-    dispatch({
-      type: USER_REGISTER_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
-};
+      localStorage.setItem("userInfo", JSON.stringify(data));
+    } catch (error) {
+      dispatch({
+        type: USER_REGISTER_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
 
 export const acceptRequestPost = (id) => async (dispatch, getState) => {
   try {
@@ -131,18 +136,23 @@ export const acceptRequestPost = (id) => async (dispatch, getState) => {
       type: USER_ACCEPT_REQUEST,
     });
 
-    const {
-      userLogin: { userInfo },
-    } = getState();
+    // const {
+    //   userLogin: { userInfo },
+    // } = getState();
 
     const config = {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${userInfo.token}`,
+        //Authorization: `Bearer ${userInfo.token}`,
+        "Access-Control-Allow-Origin": "*",
       },
     };
 
-    const { data } = await axios.put(`/api/users/${id}/accept`, {}, config);
+    const { data } = await axios.put(
+      `http://127.0.0.1:5000/api/users/${id}/accept`,
+      {},
+      config
+    );
 
     dispatch({
       type: USER_ACCEPT_SUCCESS,
@@ -172,17 +182,20 @@ export const getUsersReview = () => async (dispatch, getState) => {
       type: USER_REVIEW_REQUEST,
     });
 
-    const {
-      userLogin: { userInfo },
-    } = getState();
+    // const {
+    //   userLogin: { userInfo },
+    // } = getState();
 
     const config = {
       headers: {
-        Authorization: `Bearer ${userInfo.token}`,
+        //Authorization: `Bearer ${userInfo.token}`,
       },
     };
 
-    const { data } = await axios.get(`/api/users/reviews`, config);
+    const { data } = await axios.get(
+      `http://127.0.0.1:5000/api/users/reviews`,
+      config
+    );
 
     dispatch({
       type: USER_REVIEW_SUCCESS,
@@ -205,19 +218,20 @@ export const addUserReview = (id, feedback) => async (dispatch, getState) => {
       type: USER_REVIEW_ADD_REQUEST,
     });
 
-    const {
-      userLogin: { userInfo },
-    } = getState();
+    // const {
+    //   userLogin: { userInfo },
+    // } = getState();
 
     const config = {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${userInfo.token}`,
+        // Authorization: `Bearer ${userInfo.token}`,
+        "Access-Control-Allow-Origin": "*",
       },
     };
 
     const { data } = await axios.put(
-      `/api/users/${id}/feedback`,
+      `http://127.0.0.1:5000/api/users/${id}/feedback`,
       { feedback },
       config
     );
@@ -250,17 +264,17 @@ export const getAllUsers = () => async (dispatch, getState) => {
       type: USER_LIST_REQUEST,
     });
 
-    const {
-      userLogin: { userInfo },
-    } = getState();
+    // const {
+    //   userLogin: { userInfo },
+    // } = getState();
 
     const config = {
       headers: {
-        Authorization: `Bearer ${userInfo.token}`,
+        //Authorization: `Bearer ${userInfo.token}`,
       },
     };
 
-    const { data } = await axios.get(`/api/users`, config);
+    const { data } = await axios.get(`http://127.0.0.1:5000/api/users`, config);
 
     dispatch({
       type: USER_LIST_SUCCESS,
@@ -276,11 +290,3 @@ export const getAllUsers = () => async (dispatch, getState) => {
     });
   }
 };
-
-
-
-
-
-
-
-
