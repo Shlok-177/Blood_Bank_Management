@@ -17,6 +17,7 @@ import {
   POST_MANAGE_FAIL,
 } from "../constants/postConstants";
 
+
 export const getPostList = () => async (dispatch, getState) => {
   try {
     dispatch({ type: POST_LIST_REQUEST });

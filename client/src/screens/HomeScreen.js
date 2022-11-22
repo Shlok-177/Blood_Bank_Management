@@ -20,7 +20,6 @@ const HomeScreen = ({ history }) => {
 
   const postManage = useSelector((state) => state.postManage);
   const { success } = postManage;
-
   useEffect(() => {
     if (!userInfo) {
       history.push("/");
@@ -33,17 +32,16 @@ const HomeScreen = ({ history }) => {
   }, [userInfo, history, dispatch, success]);
 
   posts &&
-    posts.sort((a, b) => b.user.numberOfDonation - a.user.numberOfDonation);
+  posts.sort((a, b) => b.user.numberOfDonation - a.user.numberOfDonation);
 
   const newPosts =
-    posts &&
-    posts.filter(
+  posts &&
+  posts.filter(
       (post) =>
-        userInfo &&
-        !post.isManage &&
-        post.isReview &&
-        post.user._id !== userInfo._id
-    );
+      userInfo &&
+      post.user._id !== userInfo._id
+      );
+
 
   const pageCount = newPosts && Math.ceil(newPosts.length / postPerPage);
 

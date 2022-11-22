@@ -32,7 +32,7 @@ const CheckScreen = ({ history }) => {
     posts.sort((a, b) => b.user.numberOfDonation - a.user.numberOfDonation);
 
   const newPosts =
-    posts && posts.filter((post) => !post.isManage && !post.isReview);
+    posts;
 
   const pageCount = posts && Math.ceil(newPosts.length / postPerPage);
 

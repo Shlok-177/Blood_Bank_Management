@@ -15,6 +15,8 @@ const ProfileScreen = ({ history }) => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
+  // console.log(userInfo);
+
   const postList = useSelector((state) => state.postList);
   const { loading, posts } = postList;
 
@@ -26,9 +28,8 @@ const ProfileScreen = ({ history }) => {
     }
   }, [userInfo, history, dispatch]);
 
-  const newPosts =
-    posts && posts.filter((post) => userInfo && post.user._id === userInfo._id);
-
+  // console.log(posts);
+  const newPosts =posts.filter((post) => post._id === userInfo._id);
   const pageCount = newPosts && Math.ceil(newPosts.length / postPerPage);
 
   const changePage = ({ selected }) => {
