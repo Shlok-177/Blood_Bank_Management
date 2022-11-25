@@ -15,7 +15,7 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
   },
-  "author": "Arman Asif",
+  "author": "Shlok Jadeja",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
